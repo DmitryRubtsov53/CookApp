@@ -16,19 +16,15 @@ public class CookAppService {
     public Recipe addRecipe(Recipe recipe) {
         return recipeMap.put(recipeMap.size(), recipe);
     }
-
     public Recipe getTheRecipe(Integer id) {
         if (recipeMap.containsKey(id)) {
             return recipeMap.get(id);
         } else
             throw new RuntimeException("Pецепта с таким id нет.");
     }
-
     public void addIngredient(Ingredient ingredient) {
         //ingredient.add();
     }
-
-
     public Collection<Recipe> getAllRecipe() {
         return recipeMap.values();
     }
