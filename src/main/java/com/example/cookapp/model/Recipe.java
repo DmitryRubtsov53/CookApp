@@ -7,13 +7,13 @@ public class Recipe {
     private final String recipeName;
     private final int cookingTime;
     private ArrayList<String> cookingStep;
-    private ArrayList<Ingredient> ingredient;
+    private ArrayList<Ingredient> ingredients;
 
-    public Recipe(String recipeName, int cookingTime, ArrayList<Ingredient> ingredient, ArrayList<String> cookingStep) {
+    public Recipe(String recipeName, int cookingTime, ArrayList<Ingredient> ingredients, ArrayList<String> cookingStep) {
         this.recipeName = recipeName;
         this.cookingTime = cookingTime;
         this.cookingStep = cookingStep;
-        this.ingredient = ingredient;
+        this.ingredients = ingredients;
     }
 
     public String getRecipeName() { return recipeName;
@@ -25,7 +25,7 @@ public class Recipe {
     public ArrayList<String> getCookingStep() { return cookingStep;
     }
 
-    public ArrayList<Ingredient> getIngredient() { return ingredient;
+    public ArrayList<Ingredient> getIngredient() { return ingredients;
     }
 
     public void setCookingStep(ArrayList<String> cookingStep) {
@@ -33,7 +33,7 @@ public class Recipe {
     }
 
     public void setIngredient(ArrayList<Ingredient> ingredient) {
-        this.ingredient = ingredient;
+        this.ingredients = ingredient;
     }
 
     @Override
@@ -43,17 +43,17 @@ public class Recipe {
         Recipe recipe = (Recipe) o;
         return cookingTime == recipe.cookingTime && Objects.equals(recipeName, recipe.recipeName)
                 && Objects.equals(cookingStep, recipe.cookingStep)
-                && Objects.equals(ingredient, recipe.ingredient);
+                && Objects.equals(ingredients, recipe.ingredients);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(recipeName, cookingTime, cookingStep, ingredient);
+        return Objects.hash(recipeName, cookingTime, cookingStep, ingredients);
     }
 
     @Override
     public String toString() {
-        return "Recipe: " + recipeName + ", cookingTime=" + cookingTime + ", ingredient { " + ingredient +
+        return "Recipe: " + recipeName + ", cookingTime=" + cookingTime + ", ingredient { " + ingredients +
                 ", cookingStep { " + cookingStep +" }";
 
     }

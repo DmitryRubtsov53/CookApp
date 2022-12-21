@@ -23,7 +23,7 @@ public class CookAppController {
         return this.cookAppService.getAllRecipe();
 
     }
-    @GetMapping("/{id}")
+    @GetMapping("/{id}")    // Получение рецепта по id.
     public Recipe getRecipe(@PathVariable("id") Integer id){
         return this.cookAppService.getTheRecipe(id);
     }

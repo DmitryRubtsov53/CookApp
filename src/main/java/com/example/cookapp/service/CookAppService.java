@@ -12,9 +12,13 @@ import java.util.Map;
 @Service
 public class CookAppService {
     private final Map<Integer, Recipe> recipeMap = new HashMap<>();
+    private final Map<Integer, Ingredient> ingredientMap = new HashMap<>();
 
     public Recipe addRecipe(Recipe recipe) {
         return recipeMap.put(recipeMap.size(), recipe);
+    }
+    public Ingredient addIngredient(Ingredient ingredient) {
+        return ingredientMap.put(ingredientMap.size(), ingredient);
     }
     public Recipe getTheRecipe(Integer id) {
         if (recipeMap.containsKey(id)) {
@@ -22,8 +26,11 @@ public class CookAppService {
         } else
             throw new RuntimeException("Pецепта с таким id нет.");
     }
-    public void addIngredient(Ingredient ingredient) {
-        //ingredient.add();
+    public Ingredient getTheIngredient(Integer id) {
+        if (ingredientMap.containsKey(id)) {
+            return ingredientMap.get(id);
+        } else
+            throw new RuntimeException("Pецепта с таким id нет.");
     }
     public Collection<Recipe> getAllRecipe() {
         return recipeMap.values();
