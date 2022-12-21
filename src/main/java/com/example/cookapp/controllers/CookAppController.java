@@ -1,5 +1,6 @@
 package com.example.cookapp.controllers;
 
+import com.example.cookapp.model.Ingredient;
 import com.example.cookapp.model.Recipe;
 import com.example.cookapp.service.CookAppService;
 import org.springframework.web.bind.annotation.*;
@@ -18,14 +19,21 @@ public class CookAppController {
     public Recipe creatRecipe(@RequestBody Recipe recipe) {
         return this.cookAppService.addRecipe(recipe);
     }
-    @GetMapping("/all")
+    @GetMapping("/allrec")
     public Collection<Recipe> getAll(){
         return this.cookAppService.getAllRecipe();
-
     }
-    @GetMapping("/{id}")    // Получение рецепта по id.
+    @GetMapping("rec/{id}")    // Получение рецепта по id.
     public Recipe getRecipe(@PathVariable("id") Integer id){
         return this.cookAppService.getTheRecipe(id);
     }
-
+    // Ingredients...........................................................................
+    @PostMapping("/add")
+    public Ingredient creatIngredient(@RequestBody Ingredient ingredient) {
+        return this.cookAppService.addIngredient(ingredient);
+    }
+    @GetMapping("ing/{num}")    // Получение рецепта по id.
+    public Ingredient getTheIngredient(@PathVariable("num") Integer num) {
+        return this.cookAppService.getTheIngredient(num);
+    }
 }
