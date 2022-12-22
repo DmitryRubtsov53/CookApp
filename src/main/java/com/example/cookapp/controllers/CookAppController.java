@@ -28,12 +28,12 @@ public class CookAppController {
         return this.cookAppService.getTheRecipe(id);
     }
     // Ingredients...........................................................................
-    @PostMapping("/add")
-    public Ingredient creatIngredient(@RequestBody Ingredient ingredient) {
-        return this.cookAppService.addIngredient(ingredient);
-    }
-    @GetMapping("ing/{num}")    // Получение рецепта по id.
-    public Ingredient getTheIngredient(@PathVariable("num") Integer num) {
-        return this.cookAppService.getTheIngredient(num);
-    }
+//    @PostMapping("/add")
+//    public Ingredient creatIngredient(@RequestBody Ingredient ingredient) { // переносим в IngredientService
+//        return this.cookAppService.addIngredient(ingredient);
+//    }
+//    @GetMapping("ing/{num}")    // Получение рецепта по id.
+//    public Ingredient getTheIngredient(@PathVariable("num") Integer num) { // переносим в IngredientService
+//        return this.cookAppService.getTheIngredient(num);
+//    }
 }
