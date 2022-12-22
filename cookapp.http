@@ -52,7 +52,38 @@ Content-Type: application/json
     "5) Посыпать кунжутными семечками и заправить майонезом."
   ]
 }
+
+### Редактирование рецепта с определённым id.
+PUT http://localhost:8080/cookapp/edit/0
+Content-Type: application/json
+
+{
+  "recipeName": "Банный стол",
+  "cookingTime": 10,
+  "ingredients": [
+    { "ingredientName": "Пиво", "count": 3, "unit": "л." },
+    { "ingredientName": "Вяленный лещ", "count": 6, "unit": "шт." },
+    { "ingredientName": "Хлеб Рижский", "count": 1, "unit": "батон" },
+    { "ingredientName": "Масло сливочное", "count": 200, "unit": "г." }
+  ],
+  "cookingStep": [
+    "1) Пиво остудить и разлить по кружкам",
+    "2) Лещей очистить от ливера и чешуи, нарезать кусочками",
+    "3) Хлеб нарезать ломтями",
+    "4) Масло намазать на хлеб",
+    "5) Всё разложить на столе + салфетки"
+  ]
+}
+
+
+### Удаление рецепта с определённым id.
+DELETE http://localhost:8080/cookapp/del/1
+
+
 ### ИНГРЕДИЕНТЫ -----------------------------------------------------------------------------------
+
+### Получить все ингредиенты
+GET http://localhost:8080/ingredient/alling
 
 ### Получить ингредиент по id.
 GET http://localhost:8080/ingredient/2
@@ -74,3 +105,12 @@ POST http://localhost:8080/ingredient/add
 Content-Type: application/json
 
 { "ingredientName": "Зеленый салат", "count": 1, "unit": "пучок" }
+
+### Редактирование ингредиента с id.
+PUT http://localhost:8080/ingredient/edit/2
+Content-Type: application/json
+
+{ "ingredientName": "Кунжутные семечки", "count": 2, "unit": "ст. л." }
+
+### Удаление ингредиента с id.
+DELETE http://localhost:8080/ingredient/del/1

@@ -12,7 +12,6 @@ import java.util.Map;
 @Service
 public class CookAppService {
     private final Map<Integer, Recipe> recipeMap = new HashMap<>();
-    private final Map<Integer, Ingredient> ingredientMap = new HashMap<>(); // переносим в IngredientService
 
     public Recipe addRecipe(Recipe recipe) {
         return recipeMap.put(recipeMap.size(), recipe);
@@ -23,18 +22,23 @@ public class CookAppService {
         } else
             throw new RuntimeException("Pецепта с таким id нет.");
     }
+    public boolean deleteTheRecipe(Integer id) {
+        if (recipeMap.containsKey(id)) {
+            recipeMap.remove(id);
+            return true;
+        } else
+            return false;
+    }
+    public Recipe editTheRecipe(Integer id, Recipe recipe) {
+        if (recipeMap.containsKey(id)) {
+            return recipeMap.put(id,recipe);
+        } else
+            return null;
+    }
+
     public Collection<Recipe> getAllRecipe() {
         return recipeMap.values();
     }
-    // Ingredients...........................................................................
-//    public Ingredient getTheIngredient(Integer id) { // переносим в IngredientService
-//        if (ingredientMap.containsKey(id)) {
-//            return ingredientMap.get(id);
-//        } else
-//            throw new RuntimeException("Pецепта с таким id нет.");
-//    }
-//    public Ingredient addIngredient(Ingredient ingredient) {  // переносим в IngredientService
-//        return ingredientMap.put(ingredientMap.size(), ingredient);
-//    }
+
 
 }

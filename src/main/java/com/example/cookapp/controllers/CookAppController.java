@@ -3,6 +3,7 @@ package com.example.cookapp.controllers;
 import com.example.cookapp.model.Ingredient;
 import com.example.cookapp.model.Recipe;
 import com.example.cookapp.service.CookAppService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -12,8 +13,7 @@ import java.util.Collection;
 public class CookAppController {
     private final CookAppService cookAppService;
 
-    public CookAppController(CookAppService cookAppService) {
-        this.cookAppService = cookAppService;
+    public CookAppController(CookAppService cookAppService) { this.cookAppService = cookAppService;
     }
     @PostMapping("/creat")
     public Recipe creatRecipe(@RequestBody Recipe recipe) {
@@ -27,13 +27,20 @@ public class CookAppController {
     public Recipe getRecipe(@PathVariable("id") Integer id){
         return this.cookAppService.getTheRecipe(id);
     }
-    // Ingredients...........................................................................
-//    @PostMapping("/add")
-//    public Ingredient creatIngredient(@RequestBody Ingredient ingredient) { // переносим в IngredientService
-//        return this.cookAppService.addIngredient(ingredient);
-//    }
-//    @GetMapping("ing/{num}")    // Получение рецепта по id.
-//    public Ingredient getTheIngredient(@PathVariable("num") Integer num) { // переносим в IngredientService
-//        return this.cookAppService.getTheIngredient(num);
-//    }
+
+    @DeleteMapping("/del/{id}")
+    public ResponseEntity<Recipe> deleteRecipe(@PathVariable("id") Integer id) {
+        if (cookAppService.deleteTheRecipe(id)) {
+            return ResponseEntity.ok().build();
+        } else
+            return ResponseEntity.notFound().build();
+    }
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<Recipe> editRecipe(@PathVariable("id") Integer id, @RequestBody Recipe recipe) {
+        recipe = cookAppService.editTheRecipe(id,recipe);
+        if (recipe != null) {
+            return ResponseEntity.ok().build();
+        } else
+            return ResponseEntity.notFound().build();
+    }
 }
