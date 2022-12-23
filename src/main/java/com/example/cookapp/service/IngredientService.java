@@ -1,7 +1,6 @@
 package com.example.cookapp.service;
 
 import com.example.cookapp.model.Ingredient;
-import com.example.cookapp.model.Recipe;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
