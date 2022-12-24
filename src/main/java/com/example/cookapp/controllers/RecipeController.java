@@ -3,8 +3,6 @@ package com.example.cookapp.controllers;
 import com.example.cookapp.model.Recipe;
 import com.example.cookapp.service.RecipeService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -57,10 +55,8 @@ public class RecipeController {
     @GetMapping("/{id}")    // Получение рецепта по id.
     @Operation( summary = "Просмотр рецепта Кулинарной книги с указанным id."    )
     @ApiResponses (
-            @ApiResponse ( responseCode = "200",
-                    description = "Запрос выполнен успешно.",
-                    content = {
-                            @Content (mediaType = "application/json")
+            @ApiResponse ( responseCode = "200", description = "Запрос выполнен успешно.",
+                    content = { @Content (mediaType = "application/json")
                     }
             )
     )
@@ -73,8 +69,7 @@ public class RecipeController {
     @ApiResponses (
             @ApiResponse ( responseCode = "200",
                     description = "Удаление выполнено успешно.",
-                    content = {
-                            @Content (mediaType = "application/json")
+                    content = { @Content (mediaType = "application/json")
                     }
             )
     )
