@@ -31,7 +31,7 @@ public class RecipeService {
         if (recipeMap.containsKey(id)) {
             return recipeMap.put(id,recipe);
         } else
-            return null;
+            throw new RuntimeException ("Рецепт не найден.");
     }
 
     public Collection<Recipe> getAllRecipe() {

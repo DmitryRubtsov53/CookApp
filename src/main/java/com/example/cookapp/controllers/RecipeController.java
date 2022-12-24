@@ -2,6 +2,12 @@ package com.example.cookapp.controllers;
 
 import com.example.cookapp.model.Recipe;
 import com.example.cookapp.service.RecipeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collection;
 
 @RestController
-@RequestMapping("/recipe")
+@RequestMapping("/recipes")
 @Tag(name = "Кулинарная книга", description = "CRUD-операции с рецептами приготовления блюд.")
 public class RecipeController {
 
@@ -19,27 +25,76 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
+//---------------------------------------------------------------------
     @PostMapping("/")
+    @Operation( summary = "Добавление рецепта в Кулинарную книгу."    )
+    @ApiResponses (
+            @ApiResponse ( responseCode = "200",
+                    description = "Рецепт добавлен успешно.",
+                    content = {
+                            @Content (mediaType = "application/json")
+                    }
+            )
+    )
     public Recipe creatRecipe(@RequestBody Recipe recipe) {
         return this.recipeService.addRecipe(recipe);
     }
+//-------------------------------------------------------------------------
     @GetMapping("/")
+    @Operation( summary = "Просмотр всех рецептов Кулинарной книги."    )
+    @ApiResponses (
+            @ApiResponse ( responseCode = "200",
+                    description = "Запрос выполнен успешно.",
+                    content = {
+                            @Content (mediaType = "application/json")
+                    }
+            )
+    )
     public Collection<Recipe> getAll(){
         return this.recipeService.getAllRecipe();
     }
+//-------------------------------------------------------------------------------
     @GetMapping("/{id}")    // Получение рецепта по id.
+    @Operation( summary = "Просмотр рецепта Кулинарной книги с указанным id."    )
+    @ApiResponses (
+            @ApiResponse ( responseCode = "200",
+                    description = "Запрос выполнен успешно.",
+                    content = {
+                            @Content (mediaType = "application/json")
+                    }
+            )
+    )
     public Recipe getRecipe(@PathVariable("id") Integer id){
         return this.recipeService.getTheRecipe(id);
     }
-
+//-------------------------------------------------------------------------------
     @DeleteMapping("/{id}")
+    @Operation( summary = "Удаление рецепта Кулинарной книги с указанным id."    )
+    @ApiResponses (
+            @ApiResponse ( responseCode = "200",
+                    description = "Удаление выполнено успешно.",
+                    content = {
+                            @Content (mediaType = "application/json")
+                    }
+            )
+    )
     public ResponseEntity<Recipe> deleteRecipe(@PathVariable("id") Integer id) {
         if (recipeService.deleteTheRecipe(id)) {
             return ResponseEntity.ok().build();
         } else
             return ResponseEntity.notFound().build();
     }
+//-------------------------------------------------------------------------------
     @PutMapping("/{id}")
+    @Operation( summary = "Редактирование рецепта Кулинарной книги с указанным id."    )
+    @ApiResponses (
+            @ApiResponse ( responseCode = "200",
+                    description = "Редактирование выполнено успешно.",
+                    content = {
+                            @Content (mediaType = "application/json")
+                    }
+            )
+    )
     public ResponseEntity<Recipe> editRecipe(@PathVariable("id") Integer id, @RequestBody Recipe recipe) {
         recipe = recipeService.editTheRecipe(id,recipe);
         if (recipe != null) {
