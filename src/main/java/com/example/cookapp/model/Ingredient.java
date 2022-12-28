@@ -2,13 +2,15 @@ package com.example.cookapp.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor            //$$$
 public class Ingredient {
 
-    private final String ingredientName;
-    private final String unit;
-    private final int count;
+    private String ingredientName;  //$$$ убрал модификатор final
+    private String unit;            //$$$ убрал модификатор final
+    private int count;              //$$$ убрал модификатор final
 
 }

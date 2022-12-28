@@ -94,8 +94,8 @@ public class IngregientController {
     @ApiResponses ( {
             @ApiResponse ( responseCode = "200",
                     description = "Редактирование выполнено успешно.",
-                    content = {  @Content (mediaType = "application/json"
-                            //array = @ArraySchema(schema = @Schema(implementation = Ingredient.class))
+                    content = {  @Content (mediaType = "application/json",
+                            schema = @Schema(implementation = Ingredient.class)
                     )}
             ),
             @ApiResponse( responseCode = "404",

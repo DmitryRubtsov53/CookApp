@@ -2,13 +2,15 @@ package com.example.cookapp.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 @Data
 @AllArgsConstructor
+@NoArgsConstructor   //$$$
 public class Recipe {
-    private final String recipeName;
-    private final int cookingTime;
+    private  String recipeName;   //$$$ убрал модификатор final
+    private  int cookingTime;     //$$$ убрал модификатор final
     private ArrayList<String> cookingStep;
     private ArrayList<Ingredient> ingredients;
 

@@ -1,8 +1,13 @@
 package com.example.cookapp.service;
 
 import com.example.cookapp.model.Ingredient;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,7 +15,18 @@ import java.util.Map;
 @Service
 public class IngredientServiceImpl implements IngredientService {
 
-    private final Map<Integer, Ingredient> ingredientMap = new HashMap<>();
+    private Map<Integer, Ingredient> ingredientMap = new HashMap<>();
+
+    private final FileService fileService; // $$$
+
+    public IngredientServiceImpl (@Qualifier("ingredientFileServiceImpl") FileService fileService) {  // $$$
+        this.fileService = fileService;
+    } // $$$
+
+    @PostConstruct
+    private void init() {     // $$$
+        readFromFile();
+    }
     @Override
     public Ingredient addIngredient(Ingredient ingredient) {
         return ingredientMap.put(ingredientMap.size(), ingredient);
@@ -41,5 +57,24 @@ public class IngredientServiceImpl implements IngredientService {
     public Collection<Ingredient> getAllIngredient() {
         return ingredientMap.values();
     }
+    //---------------------------- $$$ -------------------------------------------------
+    private void saveToFile() {
+        try {
+            String json = new ObjectMapper().writeValueAsString(ingredientMap);
+            fileService.saveToFile(json);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
+    }
+    private void readFromFile() {
+        try {
+            String json = fileService.readFromFile();
+            ingredientMap = new ObjectMapper().readValue(json, new TypeReference<Map<Integer, Ingredient>>() {
+            });
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }
