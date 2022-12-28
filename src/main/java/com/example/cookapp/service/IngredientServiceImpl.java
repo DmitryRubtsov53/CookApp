@@ -16,20 +16,25 @@ import java.util.Map;
 public class IngredientServiceImpl implements IngredientService {
 
     private Map<Integer, Ingredient> ingredientMap = new HashMap<>();
-
+    private static Integer id = 0;   // $$$
     private final FileService fileService; // $$$
 
     public IngredientServiceImpl (@Qualifier("ingredientFileServiceImpl") FileService fileService) {  // $$$
         this.fileService = fileService;
-    } // $$$
+    }
 
     @PostConstruct
     private void init() {     // $$$
         readFromFile();
     }
+
+
     @Override
     public Ingredient addIngredient(Ingredient ingredient) {
-        return ingredientMap.put(ingredientMap.size(), ingredient);
+        ingredientMap.put(id, ingredient);
+        id++;
+        saveToFile();            // $$$
+        return ingredient;
     }
     @Override
     public Ingredient getTheIngredient(Integer id) {
@@ -49,7 +54,9 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public Ingredient editTheIngredient(Integer id, Ingredient ingredient) {
         if (ingredientMap.containsKey(id)) {
-            return ingredientMap.put(id,ingredient);
+             ingredientMap.put(id,ingredient);
+            saveToFile();
+            return ingredient;
         } else
             throw new RuntimeException ("Ингредиент не найден.");
     }

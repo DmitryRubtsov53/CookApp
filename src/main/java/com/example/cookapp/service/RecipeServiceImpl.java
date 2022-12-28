@@ -15,12 +15,12 @@ import java.util.Map;
 @Service
 public class RecipeServiceImpl implements RecipeService{
     private Map<Integer, Recipe> recipeMap = new HashMap<>();
-
+    private static Integer id = 0;   // $$$
     private final FileService fileService; // $$$
 
     public RecipeServiceImpl(@Qualifier("recipeFileServiceImpl") FileService fileService) {  // $$$
         this.fileService = fileService;
-    } // $$$
+    }
 
     @PostConstruct                             // $$$
     private void init() {     // $$$
@@ -29,8 +29,9 @@ public class RecipeServiceImpl implements RecipeService{
 
     @Override
     public Recipe addRecipe(Recipe recipe) {
-        recipeMap.put(recipeMap.size(), recipe);  // $$$ было  где return
-        saveToFile();                             // $$$
+        recipeMap.put(id, recipe);
+        id++;
+        saveToFile();                           // $$$
         return recipe;
     }
     @Override
@@ -51,9 +52,9 @@ public class RecipeServiceImpl implements RecipeService{
     @Override
     public Recipe editTheRecipe(Integer id, Recipe recipe) {
         if (recipeMap.containsKey(id)) {
-            recipeMap.put(id,recipe);       // $$$ было  где return
+            recipeMap.put(id,recipe);
             saveToFile();                     // $$$
-            return recipe;               // $$$
+            return recipe;
         } else
             throw new RuntimeException ("Рецепт не найден.");
     }
