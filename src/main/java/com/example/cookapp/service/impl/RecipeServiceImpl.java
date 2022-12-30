@@ -17,14 +17,14 @@ import java.util.Map;
 @Service
 public class RecipeServiceImpl implements RecipeService {
     private Map<Integer, Recipe> recipeMap = new HashMap<>();
-    private static Integer id = 0;   // $$$
-    private final FileService fileService; // $$$
+    private static Integer id = 0;
+    private final FileService fileService;
 
-    public RecipeServiceImpl(@Qualifier("recipeFileServiceImpl") FileService fileService) {  // $$$
+    public RecipeServiceImpl(@Qualifier("recipeFileServiceImpl") FileService fileService) {
         this.fileService = fileService;
     }
 
-    @PostConstruct                             // $$$
+    @PostConstruct
     private void init() {     // $$$
         readFromFile();
     }
@@ -33,7 +33,7 @@ public class RecipeServiceImpl implements RecipeService {
     public Recipe addRecipe(Recipe recipe) {
         recipeMap.put(id, recipe);
         id++;
-        saveToFile();                           // $$$
+        saveToFile();
         return recipe;
     }
     @Override
@@ -48,12 +48,7 @@ public class RecipeServiceImpl implements RecipeService {
         }
         return null;
     }
-    // ********** Заменённый код **********************
-//        if (recipeMap.containsKey(id)) {
-//            return recipeMap.get(id);
-//        } else
-//            throw new RuntimeException("Pецепта с таким id нет.");
-//    }
+
     @Override
     public boolean deleteTheRecipe(Integer id) {
         if (recipeMap.containsKey(id)) {
@@ -74,14 +69,7 @@ public class RecipeServiceImpl implements RecipeService {
         }
         return null;
     }
-    // ********** Заменённый код **********************
-//        if (recipeMap.containsKey(id)) {
-//            recipeMap.put(id,recipe);
-//            saveToFile();                     // $$$
-//            return recipe;
-//        } else
-//            throw new RuntimeException ("Рецепт не найден.");
-//    }
+
     @Override
     public Collection<Recipe> getAllRecipe() {
         return recipeMap.values();
@@ -93,7 +81,7 @@ public class RecipeServiceImpl implements RecipeService {
             String json = new ObjectMapper().writeValueAsString(recipeMap);
             fileService.saveToFile(json);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();    // throw new RuntimeException(e); ********************
+            e.printStackTrace();
         }
 
     }
@@ -103,7 +91,7 @@ public class RecipeServiceImpl implements RecipeService {
             recipeMap = new ObjectMapper().readValue(json, new TypeReference<Map<Integer, Recipe>>() {
             });
         } catch (JsonProcessingException e) {
-            e.printStackTrace();     //throw new RuntimeException(e); ********************
+            e.printStackTrace();
         }
 
     }

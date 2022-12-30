@@ -37,7 +37,7 @@ public class RecipeFileController {  // $http весь класс
         }
         return ResponseEntity.noContent().build();
     }
-    @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/import", consumes = MediaType.MULTIPART_FORM_DATA_VALUE) // без Этого не создаётся форма загрузки в Swagger
     @Operation( summary = "Импорт файла с рецептами в Кулинарную книгу."    )
     public ResponseEntity<Void> upLoadDataFile(@RequestParam MultipartFile file) {
         fileService.cleanDataFile();

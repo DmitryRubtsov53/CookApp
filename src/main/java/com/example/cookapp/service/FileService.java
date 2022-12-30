@@ -7,9 +7,9 @@ public interface FileService {
 
     String readFromFile();
 
-    boolean cleanDataFile(); // $http
+    boolean cleanDataFile();
 
-    File getDataFile(); // $http
+    File getDataFile();
 
 
 }

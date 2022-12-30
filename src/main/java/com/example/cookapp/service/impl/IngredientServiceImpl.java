@@ -18,10 +18,10 @@ import java.util.Map;
 public class IngredientServiceImpl implements IngredientService {
 
     private Map<Integer, Ingredient> ingredientMap = new HashMap<>();
-    private static Integer id = 0;   // $$$
-    private final FileService fileService; // $$$
+    private static Integer id = 0;
+    private final FileService fileService;
 
-    public IngredientServiceImpl (@Qualifier("ingredientFileServiceImpl") FileService fileService) {  // $$$
+    public IngredientServiceImpl (@Qualifier("ingredientFileServiceImpl") FileService fileService) {
         this.fileService = fileService;
     }
 
@@ -35,7 +35,7 @@ public class IngredientServiceImpl implements IngredientService {
     public Ingredient addIngredient(Ingredient ingredient) {
         ingredientMap.put(id, ingredient);
         id++;
-        saveToFile();            // $$$
+        saveToFile();
         return ingredient;
     }
     @Override
@@ -50,12 +50,7 @@ public class IngredientServiceImpl implements IngredientService {
         }
         return null;
     }
-// ********** Заменённый код **********************
-//        if (ingredientMap.containsKey(id)) {
-//            return ingredientMap.get(id);
-//        } else
-//            throw new RuntimeException("Pецепта с таким id нет.");
-//    }
+
     @Override
     public boolean deleteTheIngredient(Integer id) {
         if (ingredientMap.containsKey(id)) {
@@ -76,14 +71,7 @@ public class IngredientServiceImpl implements IngredientService {
         }
         return null;
     }
-    // ********** Заменённый код **********************
-//        if (ingredientMap.containsKey(id)) {
-//             ingredientMap.put(id,ingredient);
-//            saveToFile();
-//            return ingredient;
-//        } else
-//            throw new RuntimeException ("Ингредиент не найден.");
-//    }
+
     @Override
     public Collection<Ingredient> getAllIngredient() {
         return ingredientMap.values();
@@ -94,7 +82,7 @@ public class IngredientServiceImpl implements IngredientService {
             String json = new ObjectMapper().writeValueAsString(ingredientMap);
             fileService.saveToFile(json);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();    // throw new RuntimeException(e);   *****
+            e.printStackTrace();
         }
 
     }
@@ -104,7 +92,7 @@ public class IngredientServiceImpl implements IngredientService {
             ingredientMap = new ObjectMapper().readValue(json, new TypeReference<Map<Integer, Ingredient>>() {
             });
         } catch (JsonProcessingException e) {
-            e.printStackTrace();    // throw new RuntimeException(e);  *******************
+            e.printStackTrace();
         }
 
     }
