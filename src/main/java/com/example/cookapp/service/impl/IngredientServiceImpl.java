@@ -1,6 +1,8 @@
-package com.example.cookapp.service;
+package com.example.cookapp.service.impl;
 
 import com.example.cookapp.model.Ingredient;
+import com.example.cookapp.service.FileService;
+import com.example.cookapp.service.IngredientService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,11 +40,22 @@ public class IngredientServiceImpl implements IngredientService {
     }
     @Override
     public Ingredient getTheIngredient(Integer id) {
-        if (ingredientMap.containsKey(id)) {
-            return ingredientMap.get(id);
-        } else
-            throw new RuntimeException("Pецепта с таким id нет.");
+        try {
+            if (ingredientMap.containsKey(id)) {
+                return ingredientMap.get(id);
+            } else
+                throw new DataNotFoundException();
+        }catch (DataNotFoundException e){
+            System.err.println(e.getMessage());
+        }
+        return null;
     }
+// ********** Заменённый код **********************
+//        if (ingredientMap.containsKey(id)) {
+//            return ingredientMap.get(id);
+//        } else
+//            throw new RuntimeException("Pецепта с таким id нет.");
+//    }
     @Override
     public boolean deleteTheIngredient(Integer id) {
         if (ingredientMap.containsKey(id)) {
@@ -53,13 +66,24 @@ public class IngredientServiceImpl implements IngredientService {
     }
     @Override
     public Ingredient editTheIngredient(Integer id, Ingredient ingredient) {
-        if (ingredientMap.containsKey(id)) {
-             ingredientMap.put(id,ingredient);
-            saveToFile();
-            return ingredient;
-        } else
-            throw new RuntimeException ("Ингредиент не найден.");
+        try {
+            if (ingredientMap.containsKey(id)) {
+                return ingredientMap.put(id, ingredient);
+            } else
+                throw new DataNotFoundException();
+        } catch (DataNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
     }
+    // ********** Заменённый код **********************
+//        if (ingredientMap.containsKey(id)) {
+//             ingredientMap.put(id,ingredient);
+//            saveToFile();
+//            return ingredient;
+//        } else
+//            throw new RuntimeException ("Ингредиент не найден.");
+//    }
     @Override
     public Collection<Ingredient> getAllIngredient() {
         return ingredientMap.values();
@@ -70,7 +94,7 @@ public class IngredientServiceImpl implements IngredientService {
             String json = new ObjectMapper().writeValueAsString(ingredientMap);
             fileService.saveToFile(json);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();    // throw new RuntimeException(e);   *****
         }
 
     }
@@ -80,7 +104,7 @@ public class IngredientServiceImpl implements IngredientService {
             ingredientMap = new ObjectMapper().readValue(json, new TypeReference<Map<Integer, Ingredient>>() {
             });
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();    // throw new RuntimeException(e);  *******************
         }
 
     }

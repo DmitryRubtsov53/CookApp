@@ -1,6 +1,8 @@
-package com.example.cookapp.service;
+package com.example.cookapp.service.impl;
 
 import com.example.cookapp.model.Recipe;
+import com.example.cookapp.service.FileService;
+import com.example.cookapp.service.RecipeService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class RecipeServiceImpl implements RecipeService{
+public class RecipeServiceImpl implements RecipeService {
     private Map<Integer, Recipe> recipeMap = new HashMap<>();
     private static Integer id = 0;   // $$$
     private final FileService fileService; // $$$
@@ -36,11 +38,22 @@ public class RecipeServiceImpl implements RecipeService{
     }
     @Override
     public Recipe getTheRecipe(Integer id) {
-        if (recipeMap.containsKey(id)) {
-            return recipeMap.get(id);
-        } else
-            throw new RuntimeException("Pецепта с таким id нет.");
+        try {
+            if (recipeMap.containsKey(id)) {
+                return recipeMap.get(id);
+            } else
+                throw new DataNotFoundException();
+        } catch (DataNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
     }
+    // ********** Заменённый код **********************
+//        if (recipeMap.containsKey(id)) {
+//            return recipeMap.get(id);
+//        } else
+//            throw new RuntimeException("Pецепта с таким id нет.");
+//    }
     @Override
     public boolean deleteTheRecipe(Integer id) {
         if (recipeMap.containsKey(id)) {
@@ -51,13 +64,24 @@ public class RecipeServiceImpl implements RecipeService{
     }
     @Override
     public Recipe editTheRecipe(Integer id, Recipe recipe) {
-        if (recipeMap.containsKey(id)) {
-            recipeMap.put(id,recipe);
-            saveToFile();                     // $$$
-            return recipe;
-        } else
-            throw new RuntimeException ("Рецепт не найден.");
+        try {
+            if (recipeMap.containsKey(id)) {
+                return recipeMap.put(id, recipe);
+            } else
+                throw new DataNotFoundException();
+        } catch (DataNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
+    // ********** Заменённый код **********************
+//        if (recipeMap.containsKey(id)) {
+//            recipeMap.put(id,recipe);
+//            saveToFile();                     // $$$
+//            return recipe;
+//        } else
+//            throw new RuntimeException ("Рецепт не найден.");
+//    }
     @Override
     public Collection<Recipe> getAllRecipe() {
         return recipeMap.values();
@@ -69,7 +93,7 @@ public class RecipeServiceImpl implements RecipeService{
             String json = new ObjectMapper().writeValueAsString(recipeMap);
             fileService.saveToFile(json);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();    // throw new RuntimeException(e); ********************
         }
 
     }
@@ -79,7 +103,7 @@ public class RecipeServiceImpl implements RecipeService{
             recipeMap = new ObjectMapper().readValue(json, new TypeReference<Map<Integer, Recipe>>() {
             });
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();     //throw new RuntimeException(e); ********************
         }
 
     }
