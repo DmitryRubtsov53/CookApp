@@ -14,4 +14,11 @@ public class Recipe {
     private ArrayList<String> cookingStep;
     private ArrayList<Ingredient> ingredients;
 
+    public ArrayList<String> getCookingStep() {
+        return cookingStep;
+    }
+
+    public ArrayList<Ingredient> getIngredients() {
+        return ingredients;
+    }
 }

@@ -2,6 +2,7 @@ package com.example.cookapp.service;
 
 import com.example.cookapp.model.Recipe;
 
+import java.nio.file.Path;
 import java.util.Collection;
 
 public interface RecipeService {
@@ -15,4 +16,7 @@ public interface RecipeService {
     Recipe editTheRecipe(Integer id, Recipe recipe);
 
     Collection<Recipe> getAllRecipe();
+
+    // --------------------- debug -------------------------------------------------------------
+    Path createListOfAllRecipes();
 }
