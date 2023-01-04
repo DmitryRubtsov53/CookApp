@@ -10,6 +10,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -93,6 +98,31 @@ public class RecipeServiceImpl implements RecipeService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-
+   }
+// --------------------- debug -------------------------------------------------------------
+    @Override
+    public Path createListOfAllRecipes() {
+        Path path = fileService.createTempFile("listOfAllRecipes");
+        for (Recipe recipe: recipeMap.values()) {
+            try (Writer writer = Files.newBufferedWriter(path, StandardOpenOption.APPEND)){
+                writer.append(recipe.getRecipeName() + "\n");
+                writer.append("----------------------------------------------------" + "\n");
+                writer.append("Время приготовления: " + recipe.getCookingTime() + " мин."+ "\n");
+                writer.append("Ингредиенты:"+ "\n");
+                for (int i = 0; i < recipe.getIngredients().size(); i++) {
+                   writer.append((i+1) + ") " + recipe.getIngredients().get(i).getIngredientName() +
+                           " - " + recipe.getIngredients().get(i).getCount() +
+                           " " + recipe.getIngredients().get(i).getUnit()+ "\n");
+                }
+                writer.append("Инструкция приготовления:"+ "\n");
+                for (int j = 0; j < recipe.getCookingStep().size(); j++) {
+                    writer.append(recipe.getCookingStep().get(j)+ "\n");
+                }
+                writer.append("\n");
+            } catch (IOException e) {
+                e.printStackTrace();   //throw new RuntimeException(e);
+            }
+        }
+        return path;
     }
 }

@@ -12,7 +12,7 @@ import java.nio.file.Path;
 @Service
 public class RecipeFileServiceImpl implements FileService {
     @Value("${path.to.data.file}")
-    private String dataFilePath;
+    private String dataFilePath;   // debug
     @Value("${name1.of.data.file}")
     private String dataFileName;
 
@@ -52,5 +52,15 @@ public class RecipeFileServiceImpl implements FileService {
     public File getDataFile(){       // $http
         return new File(dataFilePath+"/"+dataFileName);
     } // $Http
-}
+
+    //------------------------- debug -----------------------------------------------
+    @Override
+    public Path createTempFile (String suffix) {
+        try {
+            return Files.createTempFile(Path.of(dataFilePath), "tempFile", suffix);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+} // Class
 
