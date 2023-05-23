@@ -3,7 +3,7 @@
 <li><a href="https://skyengpublic.notion.site/47bcac1b049f4af6b351e2ab5d05afb4">Техническое задание web-приложения</a></li>
 Cервис хранит рецепты и их ингредиенты, а так же возвращать рецепты по идентификатору.
 Сохранение загруженных рецептов и добавленных ингредиентов происходит в json-файлы.
-<h4>Backend:</h4>
-Java 17, Maven, Spring Boot, Spring Web, REST, Swagger
-
-
+<h3>Backend:</h3>
+Java 17, Maven, Spring Boot, Spring Web, REST
+<h3>Frontend:</h3>
+Swagger
