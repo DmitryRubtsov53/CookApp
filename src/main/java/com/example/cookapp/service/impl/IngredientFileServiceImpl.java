@@ -52,5 +52,10 @@ public class IngredientFileServiceImpl implements FileService {
     public File getDataFile() {               // $http
         return new File(dataFilePath+"/"+dataFileName);
     } // $Http
+
+    @Override
+    public Path createTempFile(String suffix) {
+        return null;
+    }
 }
 
